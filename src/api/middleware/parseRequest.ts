@@ -1,40 +1,39 @@
-const parse = (data) =>{
+import { Request, Response, NextFunction } from "express"
 
-	for(let key in data){
+const parse = (data: object) =>{
 
-		if(data[key] == 'null'){
+	const parsed_data = {...data};
 
-			data[key] = null
+	for(let key in parsed_data){
+
+		if(parsed_data[key] == 'null'){ //parse null
+
+			parsed_data[key] = null
 		}
-		else if(!isNaN(data[key])){
+		else if(!isNaN(parsed_data[key])){ //parse numbers
 
-			data[key] = Number(data[key])
+			parsed_data[key] = Number(parsed_data[key])
 		}
-		else if(data[key] == 'false' || data[key] == 'true'){
+		else if(parsed_data[key] == 'false' || parsed_data[key] == 'true'){ //parse boolean
 
-			data[key] = (data[key] === 'true')
+			parsed_data[key] = (parsed_data[key] === 'true')
 		}
 	}
 
-	return data;
+	return parsed_data;
 } 
 
 
-export default ((req, res, next) =>{
+export default ((req: Request, res: Response, next: NextFunction) =>{
 
 	if(req.query){
 
-		parse(req.query)
+		req.query = parse(req.query)
 	}
 
 	if(req.body){
 
-		parse(req.body)
-	}
-
-	if(req.param){
-
-		parse(req.param)
+		req.body = parse(req.body)
 	}
 
 	next()

@@ -1,14 +1,11 @@
-import express, { Router } from 'express'
+import { Router } from 'express'
+import registerLibraries from "./routes/libraries"
 
 export default () => {
 
-	const router = Router();
+	const app = Router()
 
-	/*
-	
-		Register routes here
+	registerLibraries(app);
 
-	*/
-
-	return router;
+	return app;
 }

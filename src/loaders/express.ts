@@ -16,7 +16,19 @@ export default (app : express.Application) =>{
 
 	app.get('/', (req, res)=>{
 
-		res.send("<b> Knowsis Backend </b>").end()
+		res.send(`
+
+			 <center>
+
+				<h1> Knosis </h1>
+
+				</br> 
+
+				<h3> Coming Soon </h3>
+
+			 </center>
+
+	    `).end()
 	})
 
 	app.get("/status", (req, res)=>{
