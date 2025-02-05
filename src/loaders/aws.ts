@@ -11,6 +11,8 @@ export default () => {
 	})
 
 	const s3 = new aws.S3();
+	const sns = new aws.SNS();
+	const ses = new aws.SES();
 
-	return s3
+	return { s3, sns, ses }
 }

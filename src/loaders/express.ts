@@ -2,7 +2,6 @@ import express from "express"
 import cors from 'cors'
 import config from "../config/index"
 import routes from "../api/index"
-import sanitizeRequest from '../api/middleware/parseRequest'
 
 export default (app : express.Application) =>{
 
@@ -11,7 +10,7 @@ export default (app : express.Application) =>{
 	app.use(cors())
 	app.use(express.urlencoded({ extended: true }));
 	app.use(express.json());
-	app.use(sanitizeRequest);
+//	app.use(sanitizeRequest);
 	app.use(config.API_PREFIX, routes());
 
 	app.get('/', (req, res)=>{

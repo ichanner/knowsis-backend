@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Structured Course Generator",
+    "prompt": "Generate an interactive, modular course based on {DOCUMENTS}. Each module should have quizzes, assignments, and coding challenges."
+  },
+  {
+    "name": "Real-time AI Tutor",
+    "prompt": "Provide adaptive course material based on {DOCUMENTS} with structured reinforcement learning elements."
+  }
+]

@@ -1,5 +1,6 @@
-export default interface Model {
+import { Sequelize, Model as SequelizeModel, ModelCtor } from 'sequelize';
 
-	name: string,
-	file: string
+export default interface IModel {
+  name: string;
+  initialize: (sequelize: Sequelize) => ModelCtor<SequelizeModel>;
 }

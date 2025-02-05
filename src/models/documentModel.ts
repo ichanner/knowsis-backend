@@ -1,26 +1,114 @@
-import mongoose, { Schema, Document as MongoDocument } from "mongoose"
+import { DataTypes, Sequelize, Model, ModelType } from 'sequelize'
+import { Container } from 'typedi'
 import IDocument from "../interfaces/IDocument"
 
-const DocumentSchema = new Schema({
+class DocumentModel extends Model<IDocument>{}
 
-  id: { type: String, required: true },
-  library_id: { type: String, required: true },
- // url: { type: String, required: true },
- // size: { type: Number, required: true },
-  owner_id: { type: String, required: true },
-  creation_date: { type: Number, required: true },
-  has_chapters: { type: Boolean, default: false },
-  name: { type: String, default: null },
-  description: { type: String, default: null },
-  author: { type: String, default: null },
-  title: { type: String, default: null },
-  tags: { type: [String], default: [] },
-  cover_url: { type: String, default: null }, // Optional cover image URL
-  pages_read: { type: Number, default: 0 },
-  chapters_read: { type: Number, default: 0 },
-  total_pages: { type: Number, default: null },
-  total_chapters: { type: Number, default: null }
+export default (sequelize: Sequelize) => {
 
-});
+	const libraryModel: ModelType = Container.get('libraryModel')
+	const userModel: ModelType = Container.get('userModel')
 
-export default mongoose.model<IDocument & MongoDocument>("Document", DocumentSchema, "Documents")
+	console.log(libraryModel)
+
+	DocumentModel.init(
+	  {
+		id: { 
+		  type: DataTypes.STRING, 
+		  primaryKey: true, 
+		  allowNull: false 
+		},
+		library_id: { 
+		  type: DataTypes.STRING, 
+		  allowNull: false,
+		  references: {
+		  	key: 'id',
+		  	model: libraryModel
+		  },
+		  onUpdate: "CASCADE",
+		  onDelete: "CASCADE"
+		},
+		content_url: { 
+		  type: DataTypes.STRING, 
+		  allowNull: false 
+		},
+		title: {
+		  type: DataTypes.STRING,
+		  allowNull: true
+		},
+		author: {
+		  type: DataTypes.STRING,
+		  allowNull: true
+		},
+		description: {
+		  type: DataTypes.STRING,
+		  allowNull: true
+		},
+		owner_id: {
+	 	  type: DataTypes.STRING,
+	 	  allowNull: false,
+	 	  references:{
+	 	    key: 'id',
+	 	    model: userModel
+	 	  },
+	 	  onUpdate: 'CASCADE',
+	 	  onDelete: 'CASCADE'
+		},
+		title_vector: {
+		  type: DataTypes.TSVECTOR,
+		  defaultValue: sequelize.literal("to_tsvector('')"),
+		  allowNull: false
+		},
+		author_vector: {
+		  type: DataTypes.TSVECTOR,
+		  defaultValue: sequelize.literal("to_tsvector('')"),
+		  allowNull: false
+		},
+		description_vector: {
+		  type: DataTypes.TSVECTOR,
+		  defaultValue: sequelize.literal("to_tsvector('')"),
+		  allowNull: false
+		},
+		tags: {
+		  type: DataTypes.TSVECTOR,
+		  defaultValue: sequelize.literal("to_tsvector('')"),
+		  allowNull: false
+		},
+		cover_url:{
+		  type: DataTypes.STRING,
+		  allowNull: true
+		},
+		creation_date: {
+		  type: DataTypes.BIGINT,
+		  allowNull: false
+		},
+		has_chapters: {
+		  type: DataTypes.BOOLEAN,
+		  defaultValue: false
+		},
+		total_pages: {
+		  type: DataTypes.BIGINT,
+		  allowNull: true
+		},
+		total_chapters: {
+		  type: DataTypes.INTEGER,
+		  allowNull: true
+		}
+	  },
+
+	  { sequelize, tableName: 'Documents',
+	  
+	  
+	  indexes:[
+	  
+	  	{ fields: ['title_vector', 'author_vector', 'description_vector', 'tags'], using: 'gin' }
+	  ]
+	  
+	  
+	  }
+	)
+
+	DocumentModel.sync({ force: false })
+
+	return DocumentModel;
+}

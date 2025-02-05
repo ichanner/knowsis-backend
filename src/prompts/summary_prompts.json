@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Executive Summary",
+    "prompt": "Summarize {TEXT} while preserving key arguments and technical precision."
+  },
+  {
+    "name": "Detailed Breakdown",
+    "prompt": "Generate three summaries of {TEXT}: a 2-sentence summary, a paragraph, and a full-page abstract."
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Deep Connection Analysis",
+    "prompt": "Analyze how the following text {SELECTION} connects to the existing database of documents {DOCUMENTS}. Identify direct references, thematic similarities, and potential contradictions."
+  },
+  {
+    "name": "Historical Influence Finder",
+    "prompt": "Find historical documents that resemble or contradict the concepts found in {SELECTION}. Compare with {DOCUMENTS}."
+  }
+]

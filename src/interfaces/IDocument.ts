@@ -1,19 +1,19 @@
 export default interface IDocument {
   id: string;
   library_id: string;
-  url: string;
-  size: number;
+  content_url: string;
   owner_id: string;
   creation_date: number;
   has_chapters: boolean;
-  name?: string | null;
-  description?: string | null;
-  author?: string | null;
-  title?: string | null;
-  tags?: string[];
-  cover_url?: string | null;
-  pages_read?: number;
-  chapters_read?: number;
-  total_pages?: number | null;
-  total_chapters?: number | null;
+  title: string | null;
+  description: string | null;
+  author: string | null;
+  title: string | null;
+  title_vector: string;
+  author_vector: string;
+  description_vector: string;
+  tags: string;
+  cover_url: string | null;
+  total_pages: number | null;
+  total_chapters: number | null;
 }
