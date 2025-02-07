@@ -50,6 +50,13 @@ export default async(sequelize: Sequelize) => {
   models.InviteModel.belongsTo(models.LibraryModel, { foreignKey: 'library_id '});
 
 
+  models.UserModel.hasMany(models.CourseworkProgressModel, { foreignKey: "user_id" });
+  models.CourseworkProgressModel.belongsTo(models.UserModel, { foreignKey: "user_id" });
+
+  models.DocumentModel.hasMany(models.CourseworkProgressModel, { foreignKey: "document_id" });
+  models.CourseworkProgressModel.belongsTo(models.DocumentModel, { foreignKey: "document_id" });
+
+
 
 /*
 
